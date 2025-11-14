@@ -1,0 +1,92 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0a0a0a;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h2 {
+  font-weight: 500;
+  font-size: 1.3rem;
+  margin-bottom: 20px;
+}
+
+ul,
+ol {
+  display: flex;
+  flex-direction: column;
+  list-style: disc;
+  margin-left: 20px;
+  gap: 5px;
+}
+
+ol {
+  gap: 10px;
+}
+
+h3 {
+  font-size: 1.1rem;
+  margin: 20px 0px;
+  font-weight: 500;
+}
+
+blockquote {
+  margin-bottom: 10px;
+}
+
+hr {
+  width: 100%;
+  opacity: 0.1;
+  margin: 10px 0;
+}
+
+p {
+  margin: 10px 0;
+}
+
+strong {
+  font-size: 1rem;
+  background-color: rgb(48, 48, 48);
+  padding: 4px;
+  border-radius: 4px;
+  font-weight: 300;
+}
+
+/* ===== Scrollbar personalizada ===== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(120, 120, 120, 0.5);
+  border-radius: 12px;
+  transition: background 0.2s ease-in-out;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(200, 200, 200, 0.7);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(120, 120, 120, 0.5) transparent;
+}

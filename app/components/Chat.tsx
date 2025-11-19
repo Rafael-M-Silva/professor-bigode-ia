@@ -6,6 +6,7 @@ import { IoPaperPlaneOutline } from "react-icons/io5";
 import { FaGreaterThanEqual, FaQuestion } from "react-icons/fa6";
 import { FaGlassMartiniAlt } from "react-icons/fa";
 import ReactMarkdown from "react-markdown";
+import Loading from "./Loading";
 
 export default function Chat() {
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -14,6 +15,7 @@ export default function Chat() {
   const [messages, setMessages] = useState<
     { role: "user" | "assistant"; content: string }[]
   >([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (messagesEndRef.current) {
@@ -26,9 +28,10 @@ export default function Chat() {
     if (!message.trim()) return;
     setMessages((prev) => [...prev, { role: "user", content: message }]);
     setMessage("");
-
+    
     try {
-      const res = await fetch("http://localhost:3000/api/chat", {
+      setIsLoading(true);
+      const res = await fetch("https://professor-bigode-ia.vercel.app/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -39,6 +42,7 @@ export default function Chat() {
 
       const resChat = await res.json();
       setMessages((prev) => [...prev, { role: "assistant", content: resChat }]);
+      setIsLoading(false);
     } catch (err) {
       console.error(err);
     }
@@ -58,19 +62,22 @@ export default function Chat() {
         <form onSubmit={getMessage}>
           <div className="flex flex-col gap-4 rounded-md border border-input transition-all duration-200 ease-in-out disabled:cursor-not-allowed disabled:opacity-50 w-full max-h-[60vh] px-4 py-3 resize-none bg-transparent border-none text-white/90 text-sm focus:outline-none placeholder:text-white/20 overflow-y-auto">
             {messages.map((msg, i) => (
-              <div
-                key={i}
-                className={` max-w-[80%] py-1 px-2 rounded-lg ${
-                  msg.role === "user"
-                    ? "bg-zinc-800 text-white self-end"
-                    : "bg-zinc-900 text-white/80 self-start"
-                }`}
-              >
-                <div className="prose prose-invert max-w-none">
-                  <ReactMarkdown>{msg.content}</ReactMarkdown>
+          
+                <div
+                  key={i}
+                  className={` max-w-[80%] py-1 px-2 rounded-lg ${
+                    msg.role === "user"
+                      ? "bg-zinc-800 text-white self-end"
+                      : "bg-zinc-900 text-white/80 self-start"
+                  }`}
+                >
+                  <div className="prose prose-invert max-w-none">
+                    <ReactMarkdown>{msg.content}</ReactMarkdown>
+                  </div>
                 </div>
-              </div>
+             
             ))}
+            {isLoading ? <Loading /> : ''}
             <div ref={messagesEndRef} />
           </div>
           <textarea
@@ -78,6 +85,12 @@ export default function Chat() {
             placeholder="Faça uma pergunta..."
             onChange={(e) => setMessage(e.target.value)}
             value={message}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                (e.target as HTMLTextAreaElement).form?.requestSubmit();
+              }
+            }}
           />
           <div className="p-4 border-t border-white/[0.05] flex items-center justify-between gap-4">
             <div className="flex gap-3.5 ">

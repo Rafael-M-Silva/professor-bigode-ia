@@ -90,3 +90,8 @@ strong {
   scrollbar-width: thin;
   scrollbar-color: rgba(120, 120, 120, 0.5) transparent;
 }
+@keyframes animate-loading {
+  to {
+    width: 10px;
+  }
+}

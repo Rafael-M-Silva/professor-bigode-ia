@@ -1,8 +1,3 @@
-Boa, esse projeto merece um README bonitão 😎
-Segue um modelo pronto pra você colar no `README.md` do repositório **professor-bigode-ia**.
-
----
-
 ````md
 # 👨‍🏫 Professor Bigode IA
 
@@ -168,11 +163,3 @@ Projeto criado por **Rafael Mauricio** como laboratório de:
 * IA aplicada ao ensino de programação
 * Integração de LLMs com front-end moderno
 * Experimentos com RAG e personas para educação
-
----
-
-Se quiser, na próxima eu posso escrever também uma **seção em inglês** (`English version`) pra deixar o README bilingue e mais “GitHub internacional”. 😉
-
-```
-::contentReference[oaicite:0]{index=0}
-```
